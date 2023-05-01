@@ -31,13 +31,15 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   db.collection("letters")
     .find()
-    .toArray((err, letter) => {
+    .toArray((err, result) => {
       if (err) return console.log(err);
-      res.render("index.ejs", { letter: letter });
-      console.log(letter);
+      res.render("index.ejs", { letters: result });
     });
 });
-
+app.get("/liveTranslation", (req, res) => {
+  if (err) return console.log(err);
+  res.render("liveTranslation.ejs", {});
+});
 app.post("/letters", (req, res) => {
   let letter = req.body.letters;
   //.replace(/\s/g, "");
@@ -50,9 +52,9 @@ app.post("/letters", (req, res) => {
 });
 
 app.delete("/deletePost", (req, res) => {
-  console.log(req.body.letters);
+  console.log(req.body.letter);
   db.collection("letters").findOneAndDelete(
-    { letter: req.body.letters },
+    { letter: req.body.letter },
     (err, result) => {
       if (err) return res.send(500, err);
       res.send("Message deleted!");
