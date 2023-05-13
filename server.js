@@ -37,9 +37,65 @@ app.get("/", (req, res) => {
     });
 });
 app.get("/liveTranslation", (req, res) => {
-  if (err) return console.log(err);
+  console.log("working");
   res.render("liveTranslation.ejs", {});
 });
+
+app.get("/study", (req, res) => {
+  db.collection("letters")
+    .find()
+    .toArray((err, result) => {
+      if (err) return console.log(err);
+      res.render("study.ejs", { letters: result });
+    });
+});
+// app.get("/study", (req, res) => {
+//   db.collection("letters")
+//     .find()
+//     .toArray((err, result) => {
+//       if (err) return console.log(err);
+//       res.render("study.ejs", { deck: result });
+//     });
+// });
+app.get("/signUp", (req, res) => {
+  console.log("working");
+  res.render("signUp.ejs", {});
+});
+app.get("/about", (req, res) => {
+  console.log("working");
+  res.render("about.ejs", {});
+});
+app.get("/contact", (req, res) => {
+  console.log("working");
+  res.render("contact.ejs", {});
+});
+app.get("/landingPage", (req, res) => {
+  console.log("working");
+  res.render("landingPage.ejs", {});
+});
+app.post("/deckCards", (req, res) => {
+  let deckName = req.body.deckName;
+  let date = Date();
+  //.replace(/\s/g, "");
+  db.collection("letters").insertOne(
+    { deck: deckName, letter: "", date, deleted: false },
+    (err, result) => {
+      if (err) return console.log(err);
+      console.log("saved to database");
+      res.redirect("/study");
+    }
+  );
+});
+// });app.post("/deckCards", (req, res) => {
+//   let letter = req.body.letters;
+//   //.replace(/\s/g, "");
+//   letter = letter.toLowerCase();
+//   db.collection("letters").insertOne({ letter: letter }, (err, result) => {
+//     if (err) return console.log(err);
+//     console.log("saved to database");
+//     res.redirect("/study");
+//   });
+//});
 app.post("/letters", (req, res) => {
   let letter = req.body.letters;
   //.replace(/\s/g, "");
@@ -52,7 +108,7 @@ app.post("/letters", (req, res) => {
 });
 
 app.delete("/deletePost", (req, res) => {
-  console.log(req.body.letter);
+  console.log(req.body);
   db.collection("letters").findOneAndDelete(
     { letter: req.body.letter },
     (err, result) => {

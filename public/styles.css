@@ -1,6 +1,3 @@
-body{
-  
-}
 h3{
   margin-top: 40px;
 }
@@ -13,4 +10,20 @@ color: lightgreen;
 #red{
   color: red;
   /* background: black; */
+}
+@font-face {
+  font-family: "Gallaude Regular";
+  src: url(fonts/GallaudetRegular.ttf) format("truetype");
+}
+.fontTest{
+  font-family: "Gallaude Regular";
+  font-size: 6rem;
+}
+.player{
+  border: 1px solid black;
+    height: 300px;
+    width: 80%;
+    display: flex;
+    margin: 0 auto;
+    border-radius: 8px;
 }
